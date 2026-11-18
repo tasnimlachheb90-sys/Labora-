@@ -1,0 +1,53 @@
+.hero {
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 55%, #7c3aed 100%);
+  color: #fff;
+  padding: 28px 24px 110px;
+}
+
+.hero-inner { max-width: 1120px; margin: 0 auto; }
+
+.brand { display: flex; align-items: center; gap: 10px; margin-bottom: 44px; }
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.brand-name { font-weight: 700; font-size: 18px; letter-spacing: 0.02em; }
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  max-width: 620px;
+}
+
+.hero p { margin: 0; opacity: 0.85; font-size: 16px; max-width: 520px; }
+
+.layout {
+  max-width: 1120px;
+  margin: -70px auto 0;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 40px 0 28px;
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}
