@@ -1,38 +1,26 @@
-const test=require("express")
-const app=test()
-const port=3000
+require("dotenv").config();
+const express = require("express");
+const db = require("./utils/db");
+const Reservation = require("./models/reservations");
 
-const cookiesparser=require('cookies-parser')
-require('dotenv').config()
-app.use(cookiesparser())
-async function testConnection(){
-    try{
-        await db.authenticate()
-        console.log('Connection has been established successfully.');
-    }catch(err){
-        console.log("error connection database :",err.message)
-    }
+const app = express();
+const port = 3000;
+
+app.use(express.json());
+app.use("/api/reservations", require("./routers/reservationRouteur"));
+
+async function start() {
+  try {
+    await db.authenticate();
+    console.log("Connection has been established successfully.");
+    await Reservation.sync();
+    console.log("Reservations table is ready.");
+    app.listen(port, () => {
+      console.log("this server is running on port " + port);
+    });
+  } catch (err) {
+    console.log("error connection database :", err);
+  }
 }
 
-//  async function createtable(){
-// await user.sync()
-// }
-try{
-testConnection()
-}catch(err){
-    console.logt(err.message)
-}
-
-
-
-
-
-
-app.listen(port,()=>{
-    console.log("this server is runnning ")
-})
-
-
-
-
-
+start();
