@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => res.send("API Labora fonctionne"));
-app.use("/api/equipment", require("./routers/equipmentRouter"));
+app.use("/api/equipment", require("./routes/equipment.routes"));
 
 app.listen(port, async () => {
   console.log(`Server is running on port ${port}`);
