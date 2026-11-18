@@ -1,38 +1,23 @@
-const test=require("express")
-const app=test()
-const port=3000
+require("dotenv").config();
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const { db, testConnection } = require("./utils/db");
 
-const cookiesparser=require('cookies-parser')
-require('dotenv').config()
-app.use(cookiesparser())
-async function testConnection(){
-    try{
-        await db.authenticate()
-        console.log('Connection has been established successfully.');
-    }catch(err){
-        console.log("error connection database :",err.message)
-    }
-}
+require("./models/Equipment");
 
-//  async function createtable(){
-// await user.sync()
-// }
-try{
-testConnection()
-}catch(err){
-    console.logt(err.message)
-}
+const app = express();
+const port = process.env.PORT || 3000;
 
+app.use(express.json());
+app.use(cookieParser());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.get("/", (req, res) => res.send("API Labora fonctionne"));
+app.use("/api/equipment", require("./routers/equipmentRouter"));
 
-
-
-
-app.listen(port,()=>{
-    console.log("this server is runnning ")
-})
-
-
-
-
-
+app.listen(port, async () => {
+  console.log(`Server is running on port ${port}`);
+  await testConnection();
+  await db.sync({ alter: true });
+});
