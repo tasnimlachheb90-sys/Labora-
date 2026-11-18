@@ -1,38 +1,22 @@
-const test=require("express")
-const app=test()
-const port=3000
+require("dotenv").config();
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
-const cookiesparser=require('cookies-parser')
-require('dotenv').config()
-app.use(cookiesparser())
-async function testConnection(){
-    try{
-        await db.authenticate()
-        console.log('Connection has been established successfully.');
-    }catch(err){
-        console.log("error connection database :",err.message)
-    }
-}
+const { testConnection } = require("./utils/db");
+const equipmentRoutes = require("./routes/equipement.routes");
 
-//  async function createtable(){
-// await user.sync()
-// }
-try{
-testConnection()
-}catch(err){
-    console.logt(err.message)
-}
+const app = express();
+const port = process.env.PORT || 3000;
 
+app.use(cors({ origin: "http://localhost:4200" }));
+app.use(express.json());
+app.use(cookieParser());
 
+app.use("/api/equipment", equipmentRoutes);
 
+testConnection();
 
-
-
-app.listen(port,()=>{
-    console.log("this server is runnning ")
-})
-
-
-
-
-
+app.listen(port, () =>
+  console.log(`Server running on http://localhost:${port}`)
+);
