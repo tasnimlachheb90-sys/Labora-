@@ -36,3 +36,8 @@ coverage/
 
 # Uploads (if not shared through Git)
 uploads/
+node_modules
+.env
+uploads/*
+!uploads/.gitkeep
+

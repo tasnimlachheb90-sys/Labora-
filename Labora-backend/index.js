@@ -1,26 +1,28 @@
 require("dotenv").config();
 
 const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
-// Importation des modules
-const cookieParser = require("cookie-parser");
+// Importation des modules DB
 const db = require("./utils/db");
 
+// Importation des modèles
 const User = require("./models/user.model");
 const Course = require("./models/course.model");
 const Reservation = require("./models/reservations");
+require("./models/Equipment");
 
 // Importation des routes
 const userRoutes = require("./routers/user.routes");
 const courseRoutes = require("./routers/course.routes");
 const reservationRoutes = require("./routers/reservationRouteur");
+const equipmentRouter = require("./routers/equipmentRouter");
 
 console.log("COURSE ROUTE FILE:", require.resolve("./routers/course.routes"));
-
-// Diagnostic du chargement des routes
 console.log("COURSE ROUTES LOADED:", typeof courseRoutes);
 
 // Configuration CORS
@@ -34,6 +36,9 @@ app.use(cors({
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+
+// Static files
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Middleware de diagnostic
 app.use((req, res, next) => {
@@ -55,6 +60,9 @@ app.use("/api/courses", courseRoutes);
 // Routes des réservations
 app.use("/api/reservations", reservationRoutes);
 
+// Routes des équipements
+app.use("/api/equipment", equipmentRouter);
+
 console.log("ALL ROUTES REGISTERED");
 
 // Connexion à la base de données et démarrage du serveur
@@ -71,6 +79,9 @@ async function testConnection() {
 
         await Reservation.sync();
         console.log("Reservations table synchronized successfully");
+
+        await db.sync({ alter: true });
+        console.log("All tables synchronized successfully");
 
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);
