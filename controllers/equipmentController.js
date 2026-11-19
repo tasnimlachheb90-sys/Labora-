@@ -10,8 +10,11 @@ const deleteImage = (filename) => {
 // Create
 exports.create = async (req, res) => {
   try {
+    console.log("BODY:", req.body);
+
     const data = { ...req.body };
     if (req.file) data.image = req.file.filename;
+
     const equipment = await Equipment.create(data);
     res.status(201).json(equipment);
   } catch (err) {
