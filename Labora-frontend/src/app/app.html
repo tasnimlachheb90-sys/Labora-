@@ -1,0 +1,169 @@
+
+<header class="navbar">
+  <div class="logo">LABORA</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#equipment">Equipment</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h1>Welcome to LABORA</h1>
+    <p>Manage your laboratory equipment easily.</p>
+    <a href="#equipment" class="primary-btn">Explore Equipment</a>
+  </div>
+</section>
+
+<section class="equipment-section" id="equipment">
+  <div class="section-heading">
+    <h2>Our Equipment</h2>
+    <p>Discover and manage laboratory equipment.</p>
+  </div>
+
+  <div class="add-equipment-action">
+    <button
+      type="button"
+      class="primary-btn"
+      (click)="showAddForm = !showAddForm; editingEquipmentId = null; successMessage = ''; errorMessage = ''">
+      + Add Equipment
+    </button>
+  </div>
+
+  @if (successMessage) {
+    <p class="success-message">{{ successMessage }}</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error-message">{{ errorMessage }}</p>
+  }
+
+  @if (showAddForm) {
+    <div class="add-equipment-form">
+      <h3>
+        {{ editingEquipmentId !== null ? 'Edit Equipment' : 'Add New Equipment' }}
+      </h3>
+
+      <p>Fill in the information below.</p>
+
+      <form (ngSubmit)="saveEquipment()">
+
+        <label>Equipment Name</label>
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="newEquipment.name"
+          placeholder="Enter equipment name"
+          required>
+
+        <label>Description</label>
+        <textarea
+          name="description"
+          [(ngModel)]="newEquipment.description"
+          placeholder="Enter description">
+        </textarea>
+
+        <label>Category</label>
+        <input
+          type="text"
+          name="category"
+          [(ngModel)]="newEquipment.category"
+          placeholder="Example: Informatique">
+
+        <label>Status</label>
+        <select
+          name="status"
+          [(ngModel)]="newEquipment.status">
+
+          <option value="available">Available</option>
+          <option value="reserved">Reserved</option>
+          <option value="maintenance">Maintenance</option>
+        </select>
+
+        <label>Equipment Image</label>
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onFileSelected($event)">
+
+        <div class="form-actions">
+          <button type="submit" class="primary-btn">
+            {{ editingEquipmentId !== null ? 'Update Equipment' : 'Save Equipment' }}
+          </button>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            (click)="cancelForm()">
+            Cancel
+          </button>
+        </div>
+
+      </form>
+    </div>
+  }
+
+  @if (isLoading) {
+    <p class="loading-message">Loading equipment...</p>
+  }
+
+  @if (!isLoading && equipments.length > 0) {
+    <div class="equipment-grid">
+
+      @for (item of equipments; track item.id) {
+        <div class="equipment-card">
+
+          @if (item.image) {
+            <img
+              class="equipment-image"
+              src="http://127.0.0.1:3000/uploads/{{ item.image }}"
+              alt="{{ item.name }}">
+          } @else {
+            <div class="equipment-placeholder">🛠️</div>
+          }
+
+          <div class="equipment-info">
+            <span class="equipment-category">
+              {{ item.category || 'General' }}
+            </span>
+
+            <h3>{{ item.name }}</h3>
+
+            <p>{{ item.description || 'No description available.' }}</p>
+
+            <span class="equipment-status {{ item.status }}">
+              {{ item.status }}
+            </span>
+          </div>
+
+          <div class="equipment-actions">
+            <button
+              type="button"
+              class="edit-btn"
+              (click)="startEdit(item)">
+              Edit
+            </button>
+
+            <button
+              type="button"
+              class="delete-btn"
+              (click)="deleteEquipment(item.id)">
+              Delete
+            </button>
+          </div>
+
+        </div>
+      }
+
+    </div>
+  }
+
+  @if (!isLoading && equipments.length === 0) {
+    <p class="empty-message">No equipment found.</p>
+  }
+
+</section>
+
+<footer class="footer">
+  <p>© 2026 LABORA - Laboratory Equipment Management</p>
+</footer>
