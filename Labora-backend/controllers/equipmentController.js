@@ -1,6 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const Equipment = require("../models/Equipment");
+const { parseSearchParams } = require("../utils/queryParser");
+const { searchEquipment } = require("../services/equipmentQuery.service");
+
 
 const deleteImage = (filename) => {
   if (!filename) return;
@@ -73,6 +76,38 @@ exports.remove = async (req, res) => {
     deleteImage(equipment.image);
     await equipment.destroy();
     res.json({ message: "Supprimé" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+// ===== Student 4: search + filters =====
+exports.search = async (req, res) => {
+  try {
+    const params = parseSearchParams(req.query);
+    const result = await searchEquipment(params);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getFilters = async (req, res) => {
+  try {
+    const get = async (col) =>
+      (
+        await Equipment.findAll({
+          attributes: [col],
+          group: [col],
+          raw: true,
+        })
+      ).map((r) => r[col]);
+
+    const [categories, statuses] = await Promise.all([
+      get("category"),
+      get("status"),
+    ]);
+
+    res.json({ categories, statuses });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

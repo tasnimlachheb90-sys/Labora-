@@ -3,6 +3,9 @@ const c = require("../controllers/equipmentController");
 const upload = require("../utils/upload");
 
 router.get("/", c.getAll);
+router.get("/search", c.search);
+router.get("/filters", c.getFilters);
+// router.get("/:id", ctrl.getOne);  <- ba3dhom
 router.get("/:id", c.getOne);
 router.post("/", upload.single("image"), c.create);
 router.put("/:id", upload.single("image"), c.update);
