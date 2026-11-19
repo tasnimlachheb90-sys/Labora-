@@ -1,4 +1,3 @@
-
 @if (showSidebar) {
   <div class="app-layout">
 
@@ -17,6 +16,20 @@
            class="menu-link">
           <span>🏠</span>
           Dashboard
+        </a>
+
+        <a routerLink="/booking"
+           routerLinkActive="active"
+           class="menu-link">
+          <span>📅</span>
+          Book Equipment
+        </a>
+
+        <a routerLink="/my-reservations"
+           routerLinkActive="active"
+           class="menu-link">
+          <span>🗂️</span>
+          My Reservations
         </a>
 
         @if (userRole === 'Admin') {

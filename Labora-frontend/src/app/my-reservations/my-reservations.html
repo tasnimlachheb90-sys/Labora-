@@ -1,0 +1,62 @@
+<div class="head">
+  <div>
+    <h2>My active reservations</h2>
+    <p class="sub">Edit your dates or cancel a booking.</p>
+  </div>
+  <button class="btn btn-ghost btn-sm" (click)="load()">↻ Refresh</button>
+</div>
+
+@if (message()) {
+  <div class="alert" [class.alert-ok]="!isError()" [class.alert-bad]="isError()">
+    {{ message() }}
+  </div>
+}
+
+@if (reservations().length === 0) {
+  <div class="empty">
+    <div class="empty-icon">🗓️</div>
+    <h3>No active reservations</h3>
+    <p>Book equipment on the left and it will appear here.</p>
+  </div>
+} @else {
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Equipment</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Purpose</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of reservations(); track r.id) {
+          <tr>
+            <td><span class="eq">#{{ r.equipmentId }}</span></td>
+            @if (editingId === r.id) {
+              <td><input type="date" [(ngModel)]="editStart" /></td>
+              <td><input type="date" [(ngModel)]="editEnd" [min]="editStart" /></td>
+              <td>{{ r.purpose || '—' }}</td>
+              <td><span class="badge">Editing</span></td>
+              <td class="actions">
+                <button class="btn btn-sm" (click)="saveEdit(r.id)">Save</button>
+                <button class="btn btn-ghost btn-sm" (click)="cancelEdit()">Back</button>
+              </td>
+            } @else {
+              <td>{{ r.startDate }}</td>
+              <td>{{ r.endDate }}</td>
+              <td>{{ r.purpose || '—' }}</td>
+              <td><span class="badge badge-ok">Active</span></td>
+              <td class="actions">
+                <button class="btn btn-ghost btn-sm" (click)="startEdit(r)">Edit dates</button>
+                <button class="btn btn-danger btn-sm" (click)="cancel(r.id)">Cancel</button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

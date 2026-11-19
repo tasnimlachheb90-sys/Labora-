@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -12,10 +11,13 @@ const db = require("./utils/db");
 
 const User = require("./models/user.model");
 const Course = require("./models/course.model");
+const Reservation = require("./models/reservations");
 
 // Importation des routes
 const userRoutes = require("./routers/user.routes");
 const courseRoutes = require("./routers/course.routes");
+const reservationRoutes = require("./routers/reservationRouteur");
+
 console.log("COURSE ROUTE FILE:", require.resolve("./routers/course.routes"));
 
 // Diagnostic du chargement des routes
@@ -50,7 +52,10 @@ app.use("/api/users", userRoutes);
 // Routes des cours
 app.use("/api/courses", courseRoutes);
 
-console.log("COURSE ROUTES REGISTERED");
+// Routes des réservations
+app.use("/api/reservations", reservationRoutes);
+
+console.log("ALL ROUTES REGISTERED");
 
 // Connexion à la base de données et démarrage du serveur
 async function testConnection() {
@@ -63,6 +68,9 @@ async function testConnection() {
 
         await Course.sync();
         console.log("Course table synchronized successfully");
+
+        await Reservation.sync();
+        console.log("Reservations table synchronized successfully");
 
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);

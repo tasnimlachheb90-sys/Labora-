@@ -1,4 +1,3 @@
-
 import { Routes } from '@angular/router';
 
 import { Login } from './pages/login/login';
@@ -7,6 +6,8 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { ManageUsers } from './pages/manage-users/manage-users';
 import { ManageCourses } from './pages/manage-courses/manage-courses';
 import { Profile } from './pages/profile/profile';
+import { BookingCheckout } from './booking-checkout/booking-checkout';
+import { MyReservations } from './my-reservations/my-reservations';
 
 import { adminGuard } from './guards/admin.guard';
 import { authGuard } from './guards/auth.guard';
@@ -30,6 +31,20 @@ export const routes: Routes = [
   {
     path: 'profile',
     component: Profile,
+    canActivate: [authGuard]
+  },
+
+  // Réservations : utilisateurs connectés
+  {
+    path: 'booking',
+    component: BookingCheckout,
+    canActivate: [authGuard]
+  },
+
+  // Mes réservations : utilisateurs connectés
+  {
+    path: 'my-reservations',
+    component: MyReservations,
     canActivate: [authGuard]
   },
 
