@@ -1,15 +1,24 @@
+
 import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ReservationService, ReservationModel } from '../services/reservation.service';
+import {
+  ReservationService,
+  ReservationModel
+} from '../services/reservation.service';
 
 @Component({
   selector: 'app-my-reservations',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './my-reservations.html',
   styleUrl: './my-reservations.css',
 })
 export class MyReservations implements OnInit {
-  userId = 1; // fixed until login exists (Student 1)
+
+  userId = Number(
+    JSON.parse(localStorage.getItem('user') || '{}').id
+  );
+
   reservations = signal<ReservationModel[]>([]);
   message = signal('');
   isError = signal(false);
@@ -18,54 +27,97 @@ export class MyReservations implements OnInit {
   editStart = '';
   editEnd = '';
 
-  constructor(private reservationService: ReservationService) {}
+  constructor(
+    private reservationService: ReservationService
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.load();
   }
 
-  load() {
-    this.reservationService.getMine(this.userId, 'active').subscribe({
-      next: (list) => this.reservations.set(list),
-      error: () => this.show('Cannot load reservations', true),
-    });
+  // Charger les réservations de l'utilisateur connecté
+  load(): void {
+    console.log('USER ID:', this.userId);
+
+    this.reservationService
+      .getMine(this.userId, 'active')
+      .subscribe({
+        next: (list) => {
+          console.log('RESERVATIONS RECEIVED:', list);
+
+          this.reservations.set(list);
+
+          console.log(
+            'RESERVATIONS IN SIGNAL:',
+            this.reservations()
+          );
+        },
+
+        error: (err) => {
+          console.error('RESERVATIONS ERROR:', err);
+          this.show('Cannot load reservations', true);
+        },
+      });
   }
 
-  startEdit(r: ReservationModel) {
+  // Modifier les dates
+  startEdit(r: ReservationModel): void {
     this.editingId = r.id;
     this.editStart = r.startDate;
     this.editEnd = r.endDate;
   }
 
-  cancelEdit() {
+  // Annuler la modification
+  cancelEdit(): void {
     this.editingId = null;
   }
 
-  saveEdit(id: number) {
+  // Enregistrer les nouvelles dates
+  saveEdit(id: number): void {
     this.reservationService
-      .update(id, { startDate: this.editStart, endDate: this.editEnd })
+      .update(id, {
+        startDate: this.editStart,
+        endDate: this.editEnd
+      })
       .subscribe({
         next: () => {
           this.editingId = null;
           this.show('Reservation updated', false);
           this.load();
         },
-        error: (err) => this.show(err.error?.message ?? 'Update failed', true),
+
+        error: (err) => {
+          this.show(
+            err.error?.message ?? 'Update failed',
+            true
+          );
+        },
       });
   }
 
-  cancel(id: number) {
-    if (!confirm('Cancel this reservation?')) return;
+  // Annuler une réservation
+  cancel(id: number): void {
+    if (!confirm('Cancel this reservation?')) {
+      return;
+    }
+
     this.reservationService.cancel(id).subscribe({
       next: () => {
         this.show('Reservation cancelled', false);
         this.load();
       },
-      error: (err) => this.show(err.error?.message ?? 'Cancel failed', true),
+
+      error: (err) => {
+        this.show(
+          err.error?.message ?? 'Cancel failed',
+          true
+        );
+      },
     });
   }
 
-  private show(text: string, error: boolean) {
+  // Afficher un message
+  private show(text: string, error: boolean): void {
     this.message.set(text);
     this.isError.set(error);
   }

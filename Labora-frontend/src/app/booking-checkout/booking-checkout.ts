@@ -9,7 +9,7 @@ import { ReservationService, BookedRange } from '../services/reservation.service
   styleUrl: './booking-checkout.css',
 })
 export class BookingCheckout implements OnInit {
-  userId = 1;          // fixed until login exists (Student 1)
+  userId = Number(JSON.parse(localStorage.getItem('user') || '{}').id);          // fixed until login exists (Student 1)
   equipmentId = 1;     // fixed until equipment exists (Student 2)
   startDate = '';
   endDate = '';

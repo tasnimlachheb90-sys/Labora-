@@ -19,7 +19,7 @@ export interface BookedRange {
 
 @Injectable({ providedIn: 'root' })
 export class ReservationService {
-  private apiUrl = 'http://localhost:3000/api/reservations';
+  private apiUrl = 'http://localhost:3001/api/reservations';
 
   constructor(private http: HttpClient) {}
 

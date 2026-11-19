@@ -25,7 +25,7 @@ console.log("COURSE ROUTES LOADED:", typeof courseRoutes);
 
 // Configuration CORS
 app.use(cors({
-    origin: "http://localhost:53865",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
