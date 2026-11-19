@@ -1,0 +1,88 @@
+
+<div class="courses-container">
+
+  <div class="page-header">
+    <h1>Gestion des cours</h1>
+    <p>Ajoutez, consultez et gérez les cours de Labora.</p>
+  </div>
+
+  <div class="course-form">
+    <h2>{{ editingId === null ? 'Ajouter un cours' : 'Modifier un cours' }}</h2>
+
+    <div class="form-group">
+      <label for="title">Titre du cours</label>
+      <input id="title" type="text" [(ngModel)]="course.title"
+        placeholder="Titre du cours">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" [(ngModel)]="course.description"
+        placeholder="Description du cours"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="instructor">Enseignant</label>
+      <input id="instructor" type="text" [(ngModel)]="course.instructor"
+        placeholder="Nom de l'enseignant">
+    </div>
+
+    <div class="form-group">
+      <label for="duration">Durée</label>
+      <input id="duration" type="text" [(ngModel)]="course.duration"
+        placeholder="Exemple : 30 heures">
+    </div>
+
+    <div class="form-buttons">
+      <button class="save-btn" (click)="saveCourse()">
+        {{ editingId === null ? 'Ajouter' : 'Enregistrer les modifications' }}
+      </button>
+
+      <button class="cancel-btn" *ngIf="editingId !== null"
+        (click)="resetForm()">
+        Annuler
+      </button>
+    </div>
+  </div>
+
+  <p class="success-message" *ngIf="message">
+    {{ message }}
+  </p>
+
+  <p class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+
+  <div class="courses-list">
+    <h2>Liste des cours</h2>
+
+    <p class="empty-message" *ngIf="courses.length === 0 && !errorMessage">
+      Aucun cours disponible pour le moment.
+    </p>
+
+    <div class="courses-grid">
+      <div class="course-card" *ngFor="let item of courses">
+
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
+
+        <div class="course-details">
+          <p><strong>Enseignant :</strong> {{ item.instructor }}</p>
+          <p><strong>Durée :</strong> {{ item.duration }}</p>
+        </div>
+
+        <div class="course-actions">
+          <button class="edit-btn" (click)="editCourse(item)">
+            Modifier
+          </button>
+
+          <button class="delete-btn" (click)="deleteCourse(item.id)">
+            Supprimer
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

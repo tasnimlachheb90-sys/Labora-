@@ -1,0 +1,64 @@
+
+@if (showSidebar) {
+  <div class="app-layout">
+
+    <aside class="sidebar">
+
+      <div class="sidebar-logo">
+        <h2>🚀 LABORA</h2>
+        <p>Management System</p>
+      </div>
+
+      <div class="sidebar-menu">
+        <p class="menu-title">MENU</p>
+
+        <a routerLink="/dashboard"
+           routerLinkActive="active"
+           class="menu-link">
+          <span>🏠</span>
+          Dashboard
+        </a>
+
+        @if (userRole === 'Admin') {
+
+          <a routerLink="/manage-users"
+             routerLinkActive="active"
+             class="menu-link">
+            <span>👥</span>
+            Manage Users
+          </a>
+
+          <a routerLink="/manage-courses"
+             routerLinkActive="active"
+             class="menu-link">
+            <span>🎓</span>
+            Manage Courses
+          </a>
+
+        }
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-user">
+          <span>👤</span>
+          <div>
+            <strong>{{ userName }}</strong>
+            <small>Welcome back!</small>
+          </div>
+        </div>
+
+        <button class="sidebar-logout" (click)="logout()">
+          🚪 Logout
+        </button>
+      </div>
+
+    </aside>
+
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+} @else {
+  <router-outlet></router-outlet>
+}

@@ -1,0 +1,145 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f1f5f9;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: #172554;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 18px;
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  padding: 10px;
+  margin-bottom: 45px;
+}
+
+.sidebar-logo h2 {
+  font-size: 25px;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+
+.sidebar-logo p {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.menu-title {
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  padding-left: 12px;
+  margin-bottom: 15px;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #cbd5e1;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.menu-link:hover,
+.menu-link.active {
+  background: #2563eb;
+  color: white;
+}
+
+.menu-link span {
+  font-size: 19px;
+}
+
+/* Sidebar bottom */
+.sidebar-bottom {
+  margin-top: auto;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 8px;
+  border-top: 1px solid #334155;
+  margin-bottom: 12px;
+}
+
+.sidebar-user > span {
+  font-size: 25px;
+}
+
+.sidebar-user strong,
+.sidebar-user small {
+  display: block;
+}
+
+.sidebar-user small {
+  color: #94a3b8;
+  margin-top: 5px;
+}
+
+.sidebar-logout {
+  width: 100%;
+  padding: 12px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.sidebar-logout:hover {
+  background: #b91c1c;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .sidebar-logo {
+    margin-bottom: 15px;
+  }
+
+  .sidebar-bottom {
+    margin-top: 15px;
+  }
+}

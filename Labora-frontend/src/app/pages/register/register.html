@@ -1,0 +1,64 @@
+
+<div class="register-container">
+
+  <div class="register-card">
+
+    <h1>Créer un compte</h1>
+    <p>Inscrivez-vous sur Labora</p>
+
+    <form (ngSubmit)="onRegister()">
+
+      <input
+        type="text"
+        name="firstname"
+        [(ngModel)]="firstname"
+        placeholder="Prénom"
+        required
+      >
+
+      <input
+        type="text"
+        name="lastname"
+        [(ngModel)]="lastname"
+        placeholder="Nom"
+        required
+      >
+
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="Adresse email"
+        required
+      >
+
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="username"
+        placeholder="Nom d'utilisateur"
+        required
+      >
+
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Mot de passe"
+        required
+      >
+
+      <button type="submit">S'inscrire</button>
+
+    </form>
+
+    <p class="message">{{ message }}</p>
+
+    <p>
+      Vous avez déjà un compte ?
+      <a routerLink="/">Se connecter</a>
+    </p>
+
+  </div>
+
+</div>
