@@ -1,54 +1,203 @@
+
 :host {
   display: block;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 28px;
+  min-height: 100vh;
+  background: #f1f5f9;
+  font-family: Arial, sans-serif;
+  color: #172554;
 }
 
-.card-head { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+.page-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 35px;
+  box-sizing: border-box;
+}
 
-.icon {
-  width: 46px;
-  height: 46px;
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.card-head .icon {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #dbeafe;
   border-radius: 12px;
-  background: var(--brand-soft);
-  display: grid;
-  place-items: center;
-  font-size: 22px;
+  font-size: 27px;
 }
 
-h2 { margin: 0; font-size: 20px; font-weight: 700; }
-.sub { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+.card-head h2 {
+  margin: 0;
+  color: #172554;
+  font-size: 30px;
+}
 
-form { display: grid; gap: 16px; }
+.sub {
+  margin: 7px 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
 
-.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.booking-card,
+.booked-card {
+  background: white;
+  padding: 25px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #2563eb;
+}
 
-.field { display: grid; gap: 6px; }
-.field span { font-size: 13px; font-weight: 600; color: #334155; }
+.section-header {
+  margin-bottom: 22px;
+}
 
-form .btn { margin-top: 6px; padding: 13px; font-size: 15px; }
+.section-header h3 {
+  margin: 0;
+  color: #172554;
+  font-size: 20px;
+}
 
-h3 {
-  margin: 30px 0 12px;
-  font-size: 12px;
+.section-header p {
+  margin: 7px 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+}
+
+.field span {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #172554;
+  background: white;
+}
+
+.field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.empty-note { margin: 0; color: var(--muted); font-size: 14px; }
+.btn:hover {
+  background: #1d4ed8;
+}
 
-.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.reserve-btn {
+  align-self: flex-start;
+  min-width: 160px;
+}
+
+.reserve-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
 
 .chips li {
-  background: var(--brand-soft);
-  color: #3730a3;
-  padding: 7px 12px;
-  border-radius: 999px;
+  padding: 10px 15px;
+  background: #dbeafe;
+  color: #1e40af;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
+}
+
+.empty-note {
+  padding: 20px;
+  text-align: center;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.alert {
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border-radius: 9px;
+  font-size: 14px;
+}
+
+.alert-ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.alert-bad {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+@media (max-width: 700px) {
+  .page-container {
+    padding: 18px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .booking-card,
+  .booked-card {
+    padding: 18px;
+  }
+
+  .reserve-btn {
+    width: 100%;
+  }
 }

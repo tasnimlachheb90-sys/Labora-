@@ -155,18 +155,6 @@ html {
   }
 }
 
-/* =====================
-   PAGE CONTAINER
-   ===================== */
-.page-container {
-  min-height: 100vh;
-  background: #fff9fb;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 5% 15%, #ffe8f1 0, transparent 28%),
-    radial-gradient(circle at 95% 40%, #fff0f6 0, transparent 25%),
-    #fffafd;
-}
 
 /* =====================
    NAVBAR
