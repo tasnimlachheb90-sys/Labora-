@@ -1,0 +1,42 @@
+.wrap {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  max-width: 900px;   /* asghar largeur */
+  margin: 0 auto;     /* fil wasat */
+  align-items: flex-start;
+}
+
+.side {
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.cal {
+  flex: 1;
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+}
+
+/* nsaghrou el cases (el hauteur) */
+:host ::ng-deep .fc .fc-daygrid-day-frame {
+  min-height: 60px;
+}
+
+/* titre w boutons asghar */
+:host ::ng-deep .fc .fc-toolbar-title {
+  font-size: 1.1rem;
+}
+:host ::ng-deep .fc .fc-button {
+  padding: 2px 8px;
+  font-size: 12px;
+}
+:host ::ng-deep .fc .fc-event {
+  font-size: 11px;
+}
