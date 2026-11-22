@@ -1,0 +1,54 @@
+:host {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+.card-head { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+
+.icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--brand-soft);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+}
+
+h2 { margin: 0; font-size: 20px; font-weight: 700; }
+.sub { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+
+form { display: grid; gap: 16px; }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.field { display: grid; gap: 6px; }
+.field span { font-size: 13px; font-weight: 600; color: #334155; }
+
+form .btn { margin-top: 6px; padding: 13px; font-size: 15px; }
+
+h3 {
+  margin: 30px 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.empty-note { margin: 0; color: var(--muted); font-size: 14px; }
+
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+
+.chips li {
+  background: var(--brand-soft);
+  color: #3730a3;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}

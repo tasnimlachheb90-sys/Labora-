@@ -1,0 +1,36 @@
+
+<div class="profile-container">
+
+  <div class="profile-header">
+    <h1>Mon profil</h1>
+    <p>Consultez vos informations personnelles.</p>
+  </div>
+
+  <div class="profile-card">
+
+    <div class="profile-avatar">
+      {{ user.username ? user.username.charAt(0).toUpperCase() : 'U' }}
+    </div>
+
+    <h2>{{ user.username || 'Utilisateur' }}</h2>
+
+    <div class="profile-info">
+      <div class="info-item">
+        <strong>Nom d'utilisateur :</strong>
+        <span>{{ user.username || 'Non renseigné' }}</span>
+      </div>
+
+      <div class="info-item">
+        <strong>Email :</strong>
+        <span>{{ user.email || 'Non renseigné' }}</span>
+      </div>
+
+      <div class="info-item">
+        <strong>Rôle :</strong>
+        <span>{{ user.role || 'Student' }}</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>

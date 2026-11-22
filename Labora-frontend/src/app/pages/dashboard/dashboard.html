@@ -1,0 +1,197 @@
+
+<div class="dashboard-container">
+
+  <header class="dashboard-header">
+    <div>
+      <h1>Welcome to Labora 👋</h1>
+      <p>Manage your platform from your dashboard.</p>
+    </div>
+
+    <button class="logout-btn" (click)="logout()">
+      Logout
+    </button>
+  </header>
+
+  <section class="welcome-card">
+    <div>
+      <h2>Hello, {{ userName }}!</h2>
+      <p>Welcome to your {{ userRole }} dashboard.</p>
+    </div>
+    <span class="welcome-icon">👋</span>
+  </section>
+
+  <!-- ADMIN DASHBOARD -->
+  @if (userRole === 'Admin') {
+
+    <section class="stats-grid">
+
+      @for (stat of stats; track stat.title) {
+        <div class="stat-card" [class]="stat.color">
+          <div class="stat-icon">{{ stat.icon }}</div>
+          <div>
+            <h3>{{ stat.value }}</h3>
+            <p>{{ stat.title }}</p>
+          </div>
+        </div>
+      }
+
+    </section>
+
+    <section class="dashboard-actions">
+      <h2>Quick Actions</h2>
+
+      <div class="actions-grid">
+        <a routerLink="/manage-users" class="action-card">
+          <span>👥</span>
+          <h3>Manage Users</h3>
+          <p>Add, edit and delete users.</p>
+        </a>
+      </div>
+    </section>
+
+  }
+
+  <!-- STUDENT DASHBOARD -->
+  @if (userRole === 'Student') {
+
+    <section class="student-section">
+
+      <h2>My Student Space 🎓</h2>
+      <p>Welcome to your personal learning space.</p>
+
+      <!-- MY PROFILE -->
+      <div class="student-card">
+        <h3>My Profile 👤</h3>
+        <a routerLink="/profile" class="profile-link">
+  View My Full Profile →
+</a>
+
+        <div class="student-info">
+          <p><strong>Username:</strong> {{ user.username }}</p>
+          <p><strong>First Name:</strong> {{ user.firstname }}</p>
+          <p><strong>Last Name:</strong> {{ user.lastname }}</p>
+          <p><strong>Role:</strong> {{ userRole }}</p>
+        </div>
+      </div>
+
+      <!-- MY ACTIVITIES -->
+      <div class="student-card">
+        <h3>My Activities 📚</h3>
+        <p>Welcome to Labora! Your student workspace is ready.</p>
+      </div>
+
+      <!-- MY COURSES -->
+      <div class="student-card courses-section">
+        <h3>My Courses 📚</h3>
+
+        <div class="courses-grid">
+
+          <div class="course-card">
+            <span>💻</span>
+            <h4>Programming</h4>
+            <p>Learn programming fundamentals.</p>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 70%"></div>
+            </div>
+            <small>70% completed</small>
+          </div>
+
+          <div class="course-card">
+            <span>🗄️</span>
+            <h4>Database</h4>
+            <p>Learn database management.</p>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 45%"></div>
+            </div>
+            <small>45% completed</small>
+          </div>
+
+          <div class="course-card">
+            <span>🌐</span>
+            <h4>Web Development</h4>
+            <p>Discover HTML, CSS and JavaScript.</p>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 85%"></div>
+            </div>
+            <small>85% completed</small>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MY TASKS -->
+      <div class="student-card tasks-section">
+        <h3>My Tasks 📋</h3>
+
+        <div class="task-item">
+          <div>
+            <h4>Complete a Java exercise</h4>
+            <p>Practice Java programming.</p>
+            <small>Deadline: 25 November 2026</small>
+          </div>
+          <span class="task-status pending">Pending</span>
+        </div>
+
+        <div class="task-item">
+          <div>
+            <h4>Database assignment</h4>
+            <p>Complete the database exercises.</p>
+            <small>Deadline: 28 November 2026</small>
+          </div>
+          <span class="task-status in-progress">In Progress</span>
+        </div>
+
+        <div class="task-item">
+          <div>
+            <h4>HTML/CSS project</h4>
+            <p>Create a simple web page.</p>
+            <small>Deadline: 15 November 2026</small>
+          </div>
+          <span class="task-status completed">Completed</span>
+        </div>
+
+      </div>
+
+      <!-- MY GRADES -->
+      <div class="student-card grades-section">
+
+        <h3>My Grades 🏆</h3>
+
+        <div class="grades-grid">
+
+          <div class="grade-card">
+            <span>💻</span>
+            <h4>Java</h4>
+            <strong>16/20</strong>
+            <small>Very Good</small>
+          </div>
+
+          <div class="grade-card">
+            <span>🗄️</span>
+            <h4>Database</h4>
+            <strong>14/20</strong>
+            <small>Good</small>
+          </div>
+
+          <div class="grade-card">
+            <span>🌐</span>
+            <h4>Web Development</h4>
+            <strong>18/20</strong>
+            <small>Excellent</small>
+          </div>
+
+        </div>
+
+        <div class="average-card">
+          <h4>Overall Average</h4>
+          <strong>16/20</strong>
+          <p>Excellent work! Keep it up 🎉</p>
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+</div>

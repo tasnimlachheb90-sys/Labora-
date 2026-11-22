@@ -1,0 +1,130 @@
+
+.users-container {
+  padding: 35px;
+  min-height: 100vh;
+  background: #f1f5f9;
+  font-family: Arial, sans-serif;
+}
+
+.users-container h1 {
+  color: #172554;
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.users-container p {
+  color: #64748b;
+  margin-bottom: 25px;
+}
+
+/* General buttons */
+button {
+  border: none;
+  border-radius: 7px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* Add button */
+.add-btn {
+  background: #2563eb;
+  color: white;
+  margin-bottom: 25px;
+}
+
+.add-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Forms */
+.user-form {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 450px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+.user-form h2 {
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.user-form input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  outline: none;
+}
+
+.user-form input:focus {
+  border-color: #2563eb;
+}
+
+/* Save and cancel */
+.save-btn {
+  background: #16a34a;
+  color: white;
+  margin-right: 8px;
+}
+
+.cancel-btn {
+  background: #64748b;
+  color: white;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+th {
+  background: #1e3a8a;
+  color: white;
+  padding: 16px;
+  text-align: left;
+}
+
+td {
+  padding: 15px 16px;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover {
+  background: #eff6ff;
+}
+
+/* Edit button */
+.edit-btn {
+  background: #f59e0b;
+  color: white;
+  margin-right: 6px;
+}
+
+.edit-btn:hover {
+  background: #d97706;
+}
+
+/* Delete button */
+.delete-btn {
+  background: #dc2626;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}

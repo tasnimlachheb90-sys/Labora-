@@ -1,0 +1,49 @@
+<div class="card-head">
+  <span class="icon">📅</span>
+  <div>
+    <h2>New booking</h2>
+    <p class="sub">Pick your dates and reserve the equipment.</p>
+  </div>
+</div>
+
+<form (ngSubmit)="submit()">
+  <label class="field">
+    <span>Equipment ID</span>
+    <input type="number" name="equipmentId" [(ngModel)]="equipmentId" (change)="loadBooked()" />
+  </label>
+
+  <div class="row">
+    <label class="field">
+      <span>Start date</span>
+      <input type="date" name="startDate" [(ngModel)]="startDate" [min]="today" required />
+    </label>
+    <label class="field">
+      <span>End date</span>
+      <input type="date" name="endDate" [(ngModel)]="endDate" [min]="startDate || today" required />
+    </label>
+  </div>
+
+  <label class="field">
+    <span>Purpose</span>
+    <input type="text" name="purpose" [(ngModel)]="purpose" placeholder="e.g. Final year project" />
+  </label>
+
+  <button class="btn" type="submit" [disabled]="!startDate || !endDate">Reserve now</button>
+</form>
+
+@if (message()) {
+  <div class="alert" [class.alert-ok]="!isError()" [class.alert-bad]="isError()">
+    {{ message() }}
+  </div>
+}
+
+<h3>Already booked</h3>
+@if (booked().length === 0) {
+  <p class="empty-note">No bookings yet for this equipment.</p>
+} @else {
+  <ul class="chips">
+    @for (r of booked(); track r.startDate + r.endDate) {
+      <li>{{ r.startDate }} → {{ r.endDate }}</li>
+    }
+  </ul>
+}
