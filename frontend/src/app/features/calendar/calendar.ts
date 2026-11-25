@@ -1,22 +1,17 @@
-
 import {
   Component,
   ElementRef,
   ViewChild,
   AfterViewInit,
   OnInit,
-  OnDestroy,
-  inject
+  OnDestroy
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { Calendar as FC, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-
-import { Equipment as EquipmentService } from '../../core/services/equipment';
 
 @Component({
   selector: 'app-calendar',
@@ -25,11 +20,7 @@ import { Equipment as EquipmentService } from '../../core/services/equipment';
   templateUrl: './calendar.html',
   styleUrl: './calendar.css',
 })
-
 export class Calendar implements OnInit, AfterViewInit, OnDestroy {
-
-  private svc = inject(EquipmentService);
-
   @ViewChild('calEl')
   calEl!: ElementRef<HTMLElement>;
 
@@ -59,41 +50,37 @@ export class Calendar implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   ngOnInit(): void {
-    this.svc.getFilters().subscribe({
-      next: (o) => {
-        this.categories = o.categories;
-      },
-      error: (err) => {
-        console.error('Erreur filters:', err);
+    try {
+      const uniqueCategories = new Set<string>();
+      for (const event of this.allEvents) {
+        const cat = event.extendedProps?.['category'];
+        if (typeof cat === 'string' && cat.trim()) {
+          uniqueCategories.add(cat);
+        }
       }
-    });
+      this.categories = Array.from(uniqueCategories);
+    } catch (err: unknown) {
+      console.error('Erreur filters:', err);
+    }
   }
 
   ngAfterViewInit(): void {
-
     this.calendar = new FC(this.calEl.nativeElement, {
       plugins: [dayGridPlugin, interactionPlugin],
-
       initialView: 'dayGridMonth',
-
       initialDate: '2026-11-19',
-
       locale: 'fr',
-
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
         right: ''
       },
-
-      events: (info, successCallback) => {
+      events: (_info, successCallback) => {
         successCallback(this.filtered());
       },
-
       dateClick: (arg) => {
         alert('Date : ' + arg.dateStr);
       },
-
       eventClick: (arg) => {
         alert('Équipement : ' + arg.event.title);
       }
@@ -105,14 +92,13 @@ export class Calendar implements OnInit, AfterViewInit, OnDestroy {
   private filtered(): EventInput[] {
     return this.selected
       ? this.allEvents.filter(
-          (event) =>
-            event.extendedProps?.['category'] === this.selected
+          (event) => event.extendedProps?.['category'] === this.selected
         )
       : this.allEvents;
   }
 
   onFilter(): void {
-    this.calendar.refetchEvents();
+    this.calendar?.refetchEvents();
   }
 
   ngOnDestroy(): void {
