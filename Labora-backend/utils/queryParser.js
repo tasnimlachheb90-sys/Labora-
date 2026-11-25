@@ -1,4 +1,4 @@
-const ALLOWED_SORT = ["name", "category", "createdAt", "location"];
+const ALLOWED_SORT = ["name", "category", "status", "createdAt"];
 
 function parseSearchParams(query) {
   const page = Math.max(parseInt(query.page) || 1, 1);

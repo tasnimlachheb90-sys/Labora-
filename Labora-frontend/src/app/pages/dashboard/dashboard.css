@@ -6,6 +6,7 @@
   font-family: Arial, sans-serif;
 }
 
+
 /* Header */
 .dashboard-header {
   display: flex;
@@ -430,3 +431,5 @@
 .profile-link:hover {
   background: #405675;
 }
+/* SIDEBAR */
+

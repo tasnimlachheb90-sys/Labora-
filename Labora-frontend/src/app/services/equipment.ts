@@ -31,4 +31,11 @@ export class Equipment {
   delete(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+  // Get categories and statuses
+getFilters() {
+  return this.http.get<{
+    categories: string[];
+    statuses: string[];
+  }>(`${this.apiUrl}/filters`);
+}
 }
