@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { Login } from './pages/login/login';
+import { Calendar } from './features/calendar/calendar';
 import { Register } from './pages/register/register';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { ManageUsers } from './pages/manage-users/manage-users';
@@ -61,5 +62,10 @@ export const routes: Routes = [
     component: ManageCourses,
     canActivate: [adminGuard]
   }
+ , {
+  path: 'calendar',
+  component: Calendar,
+  canActivate: [authGuard]
+},
 
 ];

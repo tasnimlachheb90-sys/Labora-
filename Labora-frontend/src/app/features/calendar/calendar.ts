@@ -8,7 +8,6 @@ import {
   OnDestroy,
   inject
 } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -16,16 +15,14 @@ import { Calendar as FC, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
-import { Equipment as EquipmentService } from '../../core/services/equipment';
-
+import { Equipment as EquipmentService } from '../../services/equipment';
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './calendar.html',
   styleUrl: './calendar.css',
 })
-
 export class Calendar implements OnInit, AfterViewInit, OnDestroy {
 
   private svc = inject(EquipmentService);
