@@ -4,7 +4,9 @@
   <h1>Manage Users</h1>
   <p>Manage all registered users on Labora.</p>
 
-  <button class="add-btn" (click)="showForm = !showForm; showEditForm = false">
+  <button
+    class="add-btn"
+    (click)="showForm = !showForm; showEditForm = false">
     + Add User
   </button>
 
@@ -14,25 +16,65 @@
       <h2>Add New User</h2>
 
       <form (ngSubmit)="addUser()">
-        <input type="text" name="firstname"
+
+        <input
+          type="text"
+          name="firstname"
           placeholder="First Name"
-          [(ngModel)]="newUser.firstname" required>
+          [(ngModel)]="newUser.firstname"
+          required>
 
-        <input type="text" name="lastname"
+        <input
+          type="text"
+          name="lastname"
           placeholder="Last Name"
-          [(ngModel)]="newUser.lastname" required>
+          [(ngModel)]="newUser.lastname"
+          required>
 
-        <input type="text" name="username"
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          [(ngModel)]="newUser.email"
+          required>
+
+        <input
+          type="text"
+          name="username"
           placeholder="Username"
-          [(ngModel)]="newUser.username" required>
+          [(ngModel)]="newUser.username"
+          required>
 
-        <input type="password" name="password"
+        <input
+          type="password"
+          name="password"
           placeholder="Password"
-          [(ngModel)]="newUser.password" required>
+          [(ngModel)]="newUser.password"
+          required>
 
-        <button type="submit" class="save-btn">Save User</button>
-        <button type="button" class="cancel-btn"
-          (click)="showForm = false">Cancel</button>
+        <label for="userRole">User Role</label>
+        <select
+          id="userRole"
+          name="role"
+          [(ngModel)]="newUser.role"
+          required>
+
+          <option value="Student">Student</option>
+          <option value="Admin">Admin</option>
+
+        </select>
+
+        <button type="submit" class="save-btn">
+          Save User
+        </button>
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="showForm = false">
+          Cancel
+        </button>
+
       </form>
     </div>
   }
@@ -43,22 +85,39 @@
       <h2>Edit User</h2>
 
       <form (ngSubmit)="updateUser()">
-        <input type="text" name="editFirstname"
+
+        <input
+          type="text"
+          name="editFirstname"
           placeholder="First Name"
-          [(ngModel)]="editedUser.firstname" required>
+          [(ngModel)]="editedUser.firstname"
+          required>
 
-        <input type="text" name="editLastname"
+        <input
+          type="text"
+          name="editLastname"
           placeholder="Last Name"
-          [(ngModel)]="editedUser.lastname" required>
+          [(ngModel)]="editedUser.lastname"
+          required>
 
-        <input type="text" name="editUsername"
+        <input
+          type="text"
+          name="editUsername"
           placeholder="Username"
-          [(ngModel)]="editedUser.username" required>
+          [(ngModel)]="editedUser.username"
+          required>
 
-        <button type="submit" class="save-btn">Update User</button>
+        <button type="submit" class="save-btn">
+          Update User
+        </button>
 
-        <button type="button" class="cancel-btn"
-          (click)="showEditForm = false">Cancel</button>
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="showEditForm = false">
+          Cancel
+        </button>
+
       </form>
     </div>
   }
@@ -73,6 +132,7 @@
           <th>ID</th>
           <th>First Name</th>
           <th>Last Name</th>
+          <th>Email</th>
           <th>Username</th>
           <th>Role</th>
           <th>Action</th>
@@ -85,14 +145,20 @@
             <td>{{ user.id }}</td>
             <td>{{ user.firstname }}</td>
             <td>{{ user.lastname }}</td>
+            <td>{{ user.email }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.role }}</td>
+
             <td>
-              <button class="edit-btn" (click)="editUser(user)">
+              <button
+                class="edit-btn"
+                (click)="editUser(user)">
                 Edit
               </button>
 
-              <button class="delete-btn" (click)="deleteUser(user.id)">
+              <button
+                class="delete-btn"
+                (click)="deleteUser(user.id)">
                 Delete
               </button>
             </td>

@@ -6,11 +6,22 @@ const userController = require("../controllers/user.controllers");
 const verifyToken = require("../middleware/auth.middleware");
 const authorizeRoles = require("../middleware/role.middleware");
 
-// Authentication routes
+// ======================================
+// AUTHENTICATION ROUTES
+// ======================================
+
+// Public registration (Student only)
 router.post("/register", userController.register);
+
+// Public login
 router.post("/login", userController.login);
 
-// Profile route (authenticated users)
+
+// ======================================
+// PROFILE ROUTE
+// ======================================
+
+// Authenticated users
 router.get("/profile", verifyToken, (req, res) => {
     res.status(200).json({
         message: "Welcome to your profile",
@@ -18,13 +29,49 @@ router.get("/profile", verifyToken, (req, res) => {
     });
 });
 
-// User CRUD (Admin only)
-router.get("/", verifyToken, authorizeRoles("Admin"), userController.getAllUsers);
 
-router.get("/:id", verifyToken, authorizeRoles("Admin"), userController.getUserById);
+// ======================================
+// USER MANAGEMENT (ADMIN ONLY)
+// ======================================
 
-router.put("/:id", verifyToken, authorizeRoles("Admin"), userController.updateUser);
+// Create a user (Student or Admin)
+router.post(
+    "/",
+    verifyToken,
+    authorizeRoles("Admin"),
+    userController.createUserByAdmin
+);
 
-router.delete("/:id", verifyToken, authorizeRoles("Admin"), userController.deleteUser);
+// Get all users
+router.get(
+    "/",
+    verifyToken,
+    authorizeRoles("Admin"),
+    userController.getAllUsers
+);
+
+// Get user by ID
+router.get(
+    "/:id",
+    verifyToken,
+    authorizeRoles("Admin"),
+    userController.getUserById
+);
+
+// Update user
+router.put(
+    "/:id",
+    verifyToken,
+    authorizeRoles("Admin"),
+    userController.updateUser
+);
+
+// Delete user
+router.delete(
+    "/:id",
+    verifyToken,
+    authorizeRoles("Admin"),
+    userController.deleteUser
+);
 
 module.exports = router;

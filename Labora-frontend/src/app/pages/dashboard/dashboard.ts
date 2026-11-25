@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
@@ -17,39 +17,20 @@ export class Dashboard implements OnInit {
   userRole = this.user.role || 'Student';
 
   stats = [
-    {
-      title: 'Total Users',
-      value: '0',
-      icon: '👥',
-      color: 'blue'
-    },
-    {
-      title: 'Students',
-      value: '0',
-      icon: '🎓',
-      color: 'purple'
-    },
-    {
-      title: 'Administrators',
-      value: '0',
-      icon: '🛡️',
-      color: 'orange'
-    },
-    {
-      title: 'Total Tasks',
-      value: '—',
-      icon: '📋',
-      color: 'green'
-    }
+    { title: 'Total Users', value: '0', icon: '👥', color: 'blue' },
+    { title: 'Students', value: '0', icon: '🎓', color: 'purple' },
+    { title: 'Administrators', value: '0', icon: '🛡️', color: 'orange' },
+    { title: 'Total Tasks', value: '—', icon: '📋', color: 'green' }
   ];
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    if (this.userRole === 'Admin') {
+    if (this.userRole?.toLowerCase() === 'admin') {
       this.loadStatistics();
     }
   }
@@ -57,7 +38,6 @@ export class Dashboard implements OnInit {
   loadStatistics(): void {
     this.userService.getAllUsers().subscribe({
       next: (users) => {
-
         const totalUsers = users.length;
 
         const students = users.filter(
@@ -71,8 +51,11 @@ export class Dashboard implements OnInit {
         this.stats[0].value = totalUsers.toString();
         this.stats[1].value = students.toString();
         this.stats[2].value = admins.toString();
-      },
 
+        console.log('Dashboard statistics:', this.stats);
+
+        this.cdr.detectChanges();
+      },
       error: (error) => {
         console.error('Error loading dashboard statistics:', error);
       }

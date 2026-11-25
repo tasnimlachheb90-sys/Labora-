@@ -12,44 +12,41 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  // Get all users
+  // Get authorization headers
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
+
+  // Get all users (Admin)
   getAllUsers(): Observable<any[]> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+    return this.http.get<any[]>(this.apiUrl, {
+      headers: this.getHeaders()
     });
-
-    return this.http.get<any[]>(this.apiUrl, { headers });
   }
 
-  // Add a new user
+  // Add a new user (Admin)
   addUser(user: any): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+    return this.http.post(this.apiUrl, user, {
+      headers: this.getHeaders()
     });
-
-    return this.http.post(`${this.apiUrl}/register`, user, { headers });
   }
 
-  // Delete a user
+  // Delete a user (Admin)
   deleteUser(id: number): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+    return this.http.delete(`${this.apiUrl}/${id}`, {
+      headers: this.getHeaders()
     });
-
-    return this.http.delete(`${this.apiUrl}/${id}`, { headers });
   }
 
-  // Update a user
+  // Update a user (Admin)
   updateUser(id: number, user: any): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+    return this.http.put(`${this.apiUrl}/${id}`, user, {
+      headers: this.getHeaders()
     });
-
-    return this.http.put(`${this.apiUrl}/${id}`, user, { headers });
   }
 
 }

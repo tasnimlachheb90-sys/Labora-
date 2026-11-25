@@ -1,9 +1,13 @@
 
+/* =========================
+   USERS CONTAINER
+   ========================= */
 .users-container {
   padding: 35px;
   min-height: 100vh;
   background: #f1f5f9;
   font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 .users-container h1 {
@@ -17,7 +21,9 @@
   margin-bottom: 25px;
 }
 
-/* General buttons */
+/* =========================
+   GENERAL BUTTONS
+   ========================= */
 button {
   border: none;
   border-radius: 7px;
@@ -25,7 +31,11 @@ button {
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
 }
 
 /* Add button */
@@ -39,7 +49,9 @@ button {
   background: #1d4ed8;
 }
 
-/* Forms */
+/* =========================
+   FORMS
+   ========================= */
 .user-form {
   background: white;
   padding: 25px;
@@ -50,11 +62,13 @@ button {
 }
 
 .user-form h2 {
-  color: #1e293b;
+  color: #172554;
   margin-bottom: 20px;
+  font-size: 21px;
 }
 
-.user-form input {
+.user-form input,
+.user-form select {
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -63,17 +77,37 @@ button {
   border: 1px solid #cbd5e1;
   border-radius: 7px;
   outline: none;
+  font-size: 14px;
+  background: white;
+  color: #334155;
+  transition: 0.2s ease;
 }
 
-.user-form input:focus {
+.user-form input:focus,
+.user-form select:focus {
   border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-/* Save and cancel */
+.user-form label {
+  display: block;
+  color: #334155;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* =========================
+   SAVE AND CANCEL BUTTONS
+   ========================= */
 .save-btn {
   background: #16a34a;
   color: white;
   margin-right: 8px;
+}
+
+.save-btn:hover {
+  background: #15803d;
 }
 
 .cancel-btn {
@@ -81,7 +115,13 @@ button {
   color: white;
 }
 
-/* Table */
+.cancel-btn:hover {
+  background: #475569;
+}
+
+/* =========================
+   USERS TABLE
+   ========================= */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -96,19 +136,30 @@ th {
   color: white;
   padding: 16px;
   text-align: left;
+  font-size: 14px;
 }
 
 td {
   padding: 15px 16px;
   color: #334155;
   border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
 }
 
-tr:hover {
+tbody tr:hover {
   background: #eff6ff;
 }
 
-/* Edit button */
+/* =========================
+   ROLE
+   ========================= */
+td:nth-child(6) {
+  font-weight: bold;
+}
+
+/* =========================
+   EDIT BUTTON
+   ========================= */
 .edit-btn {
   background: #f59e0b;
   color: white;
@@ -119,7 +170,9 @@ tr:hover {
   background: #d97706;
 }
 
-/* Delete button */
+/* =========================
+   DELETE BUTTON
+   ========================= */
 .delete-btn {
   background: #dc2626;
   color: white;
@@ -127,4 +180,28 @@ tr:hover {
 
 .delete-btn:hover {
   background: #b91c1c;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 768px) {
+  .users-container {
+    padding: 20px;
+  }
+
+  .users-container h1 {
+    font-size: 25px;
+  }
+
+  .user-form {
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }

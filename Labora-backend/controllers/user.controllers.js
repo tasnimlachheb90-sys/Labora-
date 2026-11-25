@@ -5,12 +5,13 @@ const jwt = require("jsonwebtoken");
 
 const userController = {
 
-    // REGISTER
+    // ======================================
+    // REGISTER (PUBLIC - STUDENT ONLY)
+    // ======================================
     register: async (req, res) => {
         try {
             const { firstname, lastname, email, username, password } = req.body;
 
-            // Vérification des champs
             if (![firstname, lastname, email, username, password].every(
                 value => typeof value === "string" && value.trim() !== ""
             )) {
@@ -22,7 +23,6 @@ const userController = {
             const cleanEmail = email.trim().toLowerCase();
             const cleanUsername = username.trim();
 
-            // Vérifier si username existe
             const existingUsername = await User.findOne({
                 where: { username: cleanUsername }
             });
@@ -33,7 +33,6 @@ const userController = {
                 });
             }
 
-            // Vérifier si email existe
             const existingEmail = await User.findOne({
                 where: { email: cleanEmail }
             });
@@ -44,10 +43,9 @@ const userController = {
                 });
             }
 
-            // Hasher le mot de passe
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            // Créer utilisateur
+            // Public registration always creates a Student
             const user = await User.create({
                 firstname: firstname.trim(),
                 lastname: lastname.trim(),
@@ -76,7 +74,10 @@ const userController = {
         }
     },
 
+
+    // ======================================
     // LOGIN
+    // ======================================
     login: async (req, res) => {
         try {
             const { username, password } = req.body;
@@ -92,14 +93,11 @@ const userController = {
                 });
             }
 
-            // Rechercher utilisateur
             const user = await User.findOne({
                 where: {
                     username: username.trim()
                 }
             });
-
-            console.log("LOGIN USER FROM DATABASE:", user?.toJSON());
 
             if (!user) {
                 return res.status(401).json({
@@ -107,7 +105,6 @@ const userController = {
                 });
             }
 
-            // Vérifier mot de passe
             const passwordMatch = await bcrypt.compare(
                 password,
                 user.password
@@ -119,7 +116,6 @@ const userController = {
                 });
             }
 
-            // Générer JWT
             const token = jwt.sign(
                 {
                     id: user.id,
@@ -130,8 +126,6 @@ const userController = {
                     expiresIn: "15m"
                 }
             );
-
-            console.log("EMAIL SENT TO FRONTEND:", user.email);
 
             return res.status(200).json({
                 message: "Login successful",
@@ -154,7 +148,99 @@ const userController = {
         }
     },
 
-    // GET ALL USERS
+
+    // ======================================
+    // CREATE USER BY ADMIN
+    // ======================================
+    createUserByAdmin: async (req, res) => {
+        try {
+            const {
+                firstname,
+                lastname,
+                email,
+                username,
+                password,
+                role
+            } = req.body;
+
+            // Check required fields
+            if (![firstname, lastname, email, username, password, role].every(
+                value => typeof value === "string" && value.trim() !== ""
+            )) {
+                return res.status(400).json({
+                    message: "All fields are required"
+                });
+            }
+
+            // Validate role
+            if (!["Student", "Admin"].includes(role)) {
+                return res.status(400).json({
+                    message: "Invalid user role"
+                });
+            }
+
+            const cleanEmail = email.trim().toLowerCase();
+            const cleanUsername = username.trim();
+
+            // Check duplicate username
+            const existingUsername = await User.findOne({
+                where: { username: cleanUsername }
+            });
+
+            if (existingUsername) {
+                return res.status(409).json({
+                    message: "Username already exists"
+                });
+            }
+
+            // Check duplicate email
+            const existingEmail = await User.findOne({
+                where: { email: cleanEmail }
+            });
+
+            if (existingEmail) {
+                return res.status(409).json({
+                    message: "Email already exists"
+                });
+            }
+
+            // Hash password
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            // Create user with selected role
+            const user = await User.create({
+                firstname: firstname.trim(),
+                lastname: lastname.trim(),
+                email: cleanEmail,
+                username: cleanUsername,
+                password: hashedPassword,
+                role: role
+            });
+
+            return res.status(201).json({
+                message: "User created successfully",
+                user: {
+                    id: user.id,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    username: user.username,
+                    role: user.role
+                }
+            });
+
+        } catch (err) {
+            console.error("Admin user creation error:", err.message);
+            return res.status(500).json({
+                message: "Error creating user"
+            });
+        }
+    },
+
+
+    // ======================================
+    // GET ALL USERS (ADMIN)
+    // ======================================
     getAllUsers: async (req, res) => {
         try {
             const users = await User.findAll({
@@ -171,7 +257,10 @@ const userController = {
         }
     },
 
-    // GET USER BY ID
+
+    // ======================================
+    // GET USER BY ID (ADMIN)
+    // ======================================
     getUserById: async (req, res) => {
         try {
             const id = Number(req.params.id);
@@ -202,7 +291,10 @@ const userController = {
         }
     },
 
-    // UPDATE USER
+
+    // ======================================
+    // UPDATE USER (ADMIN)
+    // ======================================
     updateUser: async (req, res) => {
         try {
             const id = Number(req.params.id);
@@ -213,9 +305,15 @@ const userController = {
                 });
             }
 
-            const { firstname, lastname, email, username, password } = req.body;
+            const {
+                firstname,
+                lastname,
+                email,
+                username,
+                password
+            } = req.body;
 
-            // Interdire la modification du rôle ici
+            // Prevent role modification through this route
             if ("role" in req.body) {
                 return res.status(400).json({
                     message: "Role cannot be changed through this route"
@@ -230,7 +328,7 @@ const userController = {
                 });
             }
 
-            // Modifier username
+            // Update username
             if (username !== undefined) {
                 if (typeof username !== "string" || !username.trim()) {
                     return res.status(400).json({
@@ -255,7 +353,7 @@ const userController = {
                 }
             }
 
-            // Modifier firstname
+            // Update firstname
             if (firstname !== undefined) {
                 if (typeof firstname !== "string" || !firstname.trim()) {
                     return res.status(400).json({
@@ -266,7 +364,7 @@ const userController = {
                 user.firstname = firstname.trim();
             }
 
-            // Modifier lastname
+            // Update lastname
             if (lastname !== undefined) {
                 if (typeof lastname !== "string" || !lastname.trim()) {
                     return res.status(400).json({
@@ -277,7 +375,7 @@ const userController = {
                 user.lastname = lastname.trim();
             }
 
-            // Modifier email
+            // Update email
             if (email !== undefined) {
                 if (typeof email !== "string" || !email.trim()) {
                     return res.status(400).json({
@@ -302,7 +400,7 @@ const userController = {
                 }
             }
 
-            // Modifier password
+            // Update password
             if (password !== undefined) {
                 if (typeof password !== "string" || !password) {
                     return res.status(400).json({
@@ -335,7 +433,10 @@ const userController = {
         }
     },
 
-    // DELETE USER
+
+    // ======================================
+    // DELETE USER (ADMIN)
+    // ======================================
     deleteUser: async (req, res) => {
         try {
             const id = Number(req.params.id);

@@ -17,13 +17,17 @@ export class ManageUsers implements OnInit {
   showForm = false;
   showEditForm = false;
 
+  // New user form
   newUser = {
     firstname: '',
     lastname: '',
+    email: '',
     username: '',
-    password: ''
+    password: '',
+    role: 'Student'
   };
 
+  // Edit user form
   editedUser = {
     id: 0,
     firstname: '',
@@ -56,28 +60,52 @@ export class ManageUsers implements OnInit {
     });
   }
 
-  // Add user
+  // Reset new user form
+  resetNewUser(): void {
+    this.newUser = {
+      firstname: '',
+      lastname: '',
+      email: '',
+      username: '',
+      password: '',
+      role: 'Student'
+    };
+  }
+
+  // Add user (Admin)
   addUser(): void {
+
+    if (
+      !this.newUser.firstname.trim() ||
+      !this.newUser.lastname.trim() ||
+      !this.newUser.email.trim() ||
+      !this.newUser.username.trim() ||
+      !this.newUser.password ||
+      !this.newUser.role
+    ) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
     this.userService.addUser(this.newUser).subscribe({
       next: (response) => {
-        alert(response.message);
-        this.newUser = {
-          firstname: '',
-          lastname: '',
-          username: '',
-          password: ''
-        };
+        alert(response.message || 'User created successfully!');
+
+        this.resetNewUser();
         this.showForm = false;
+
         this.loadUsers();
       },
       error: (error) => {
-        alert(error.error?.message || 'Erreur lors de la création.');
+        console.error(error);
+        alert(error.error?.message || 'Error creating user.');
       }
     });
   }
 
   // Delete user
   deleteUser(id: number): void {
+
     const confirmation = confirm(
       'Are you sure you want to delete this user?'
     );
@@ -98,6 +126,7 @@ export class ManageUsers implements OnInit {
 
   // Open edit form
   editUser(user: any): void {
+
     this.editedUser = {
       id: user.id,
       firstname: user.firstname,
@@ -111,6 +140,7 @@ export class ManageUsers implements OnInit {
 
   // Update user
   updateUser(): void {
+
     this.userService.updateUser(
       this.editedUser.id,
       {
