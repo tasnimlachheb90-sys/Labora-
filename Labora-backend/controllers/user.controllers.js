@@ -131,7 +131,7 @@ const userController = {
                 }
             );
 
-            console.log("EMAIL SENT TO FRONTEND:", user.email);
+           console.log("EMAIL SENT TO FRONTEND:", user.email);
 
             return res.status(200).json({
                 message: "Login successful",
