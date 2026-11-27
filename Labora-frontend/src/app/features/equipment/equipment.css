@@ -1,0 +1,106 @@
+
+.equipment-container {
+  padding: 25px;
+}
+
+.equipment-container h2 {
+  margin-bottom: 25px;
+  color: #243047;
+  font-size: 26px;
+}
+
+.equipment-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.equipment-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.equipment-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.equipment-card h3 {
+  color: #243047;
+  margin-bottom: 12px;
+}
+
+.equipment-card p {
+  color: #64748b;
+  margin: 8px 0;
+}
+
+.error-message {
+  color: red;
+}
+
+.equipment-form {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px solid #e5e7eb;
+}
+
+.equipment-form h3 {
+  margin-bottom: 20px;
+  color: #243047;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 7px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.form-group textarea {
+  min-height: 80px;
+}
+
+.equipment-form button {
+  background: #2563eb;
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.equipment-form button:hover {
+  background: #1d4ed8;
+}
+
+.success-message {
+  color: green;
+  margin-top: 12px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 12px;
+}

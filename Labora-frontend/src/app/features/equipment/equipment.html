@@ -1,0 +1,146 @@
+
+<div class="equipment-container">
+
+  <h2>Equipment Management</h2>
+
+  <!-- Add / Edit Equipment Form -->
+  <div class="equipment-form">
+
+    <h3>
+      {{ editingEquipmentId !== null ? 'Edit Equipment' : 'Add New Equipment' }}
+    </h3>
+
+    <form [formGroup]="equipmentForm" (ngSubmit)="saveEquipment()">
+
+      <div class="form-group">
+        <label>Equipment Name</label>
+
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Enter equipment name"
+        >
+
+        <p
+          class="error-message"
+          *ngIf="equipmentForm.get('name')?.invalid &&
+                 equipmentForm.get('name')?.touched">
+          Equipment name is required.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+
+        <textarea
+          formControlName="description"
+          placeholder="Enter description">
+        </textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+
+        <input
+          type="text"
+          formControlName="category"
+          placeholder="Enter category"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+
+        <select formControlName="status">
+          <option value="available">Available</option>
+          <option value="reserved">Reserved</option>
+          <option value="maintenance">Maintenance</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Equipment Image</label>
+
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+        >
+      </div>
+
+      <button type="submit">
+        {{ editingEquipmentId !== null ? 'Update Equipment' : 'Add Equipment' }}
+      </button>
+
+      <button
+        *ngIf="editingEquipmentId !== null"
+        type="button"
+        (click)="cancelEdit()">
+        Cancel
+      </button>
+
+    </form>
+
+    <p *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </p>
+
+    <p *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </p>
+
+  </div>
+
+  <!-- Equipment List -->
+  <h3>Equipment List</h3>
+
+  <p *ngIf="isLoading">Loading equipment...</p>
+
+  <div *ngIf="!isLoading && equipments.length === 0">
+    No equipment found.
+  </div>
+
+  <div
+    class="equipment-list"
+    *ngIf="!isLoading && equipments.length > 0"
+  >
+
+    <div class="equipment-card" *ngFor="let item of equipments">
+
+      <img
+        *ngIf="item.image"
+        [src]="'http://localhost:3000/' + item.image"
+        [alt]="item.name"
+      >
+
+      <h3>{{ item.name || 'Unnamed equipment' }}</h3>
+
+      <p>{{ item.description || 'No description available' }}</p>
+
+      <p>
+        <strong>Category:</strong>
+        {{ item.category || 'Not specified' }}
+      </p>
+
+      <p>
+        <strong>Status:</strong>
+        {{ item.status }}
+      </p>
+
+      <button
+        type="button"
+        (click)="startEdit(item)">
+        Edit
+      </button>
+
+      <button
+        type="button"
+        (click)="deleteEquipment(item.id)">
+        Delete
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
